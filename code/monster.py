@@ -1,19 +1,24 @@
 from settings import *
 from random import sample
 
-class Monster(pygame.sprite.Sprite):
+class Creature:
+    def get_data(self,name):
+        self.element = MONSTER_DATA[name]['element']
+        self.health = self.max_health = MONSTER_DATA[name]['health']
+        self.abilities = sample(list(ABILITIES_DATA.keys()),4)
+        self.name = name
+
+class Monster(pygame.sprite.Sprite, Creature):
     def __init__(self, name, surf):
         super().__init__()
         self.image = surf
         self.rect = self.image.get_frect(bottomleft = (200, WINDOW_HEIGHT))
-        self.name = name
-        # data
-        self.element = MONSTER_DATA[name]['element']
-        self.health = self.max_health = MONSTER_DATA[name]['health']
-        self.abilities = sample(list(ABILITIES_DATA.keys()),4)
+        self.get_data(name)
 
-class Opponent(pygame.sprite.Sprite):
+
+class Opponent(pygame.sprite.Sprite, Creature):
     def __init__(self, name, surf, groups):
         super().__init__(groups)
         self.image = surf
         self.rect = self.image.get_frect(topright = (WINDOW_WIDTH - 128, 128))
+        self.get_data(name)
