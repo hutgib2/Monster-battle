@@ -17,7 +17,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
 
         # data
-        player_monster_list = ['Sparchu', 'Cleaf', 'Jacana']
+        player_monster_list = ['Sparchu', 'Cleaf', 'Jacana', 'Gulfin', 'Pouch', 'Larvea']
         self.player_monsters = [Monster(name, self.back_surfs[name]) for name in player_monster_list]
         self.monster = self.player_monsters[0]
         self.all_sprites.add(self.monster)
@@ -26,12 +26,13 @@ class Game:
         self.random_name = self.monster_names[randint(0, len(self.monster_names)-1)]
         self.opponent = Opponent(self.random_name, self.front_surfs[self.random_name], self.all_sprites)
         # ui
-        self.ui = UI(self.monster)
+        self.ui = UI(self.monster, self.player_monsters, self.simple_surfs)
 
     def import_assests(self):
         self.back_surfs = folder_importer('images', 'back')
         self.bg_surfs = folder_importer('images', 'other')
         self.front_surfs = folder_importer('images', 'front')
+        self.simple_surfs = folder_importer('images', 'simple')
 
     def draw_monster_floor(self):
         for sprite in self.all_sprites:
