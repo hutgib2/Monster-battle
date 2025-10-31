@@ -13,21 +13,21 @@ COLORS = {
 
 MONSTER_DATA = {
 	'Plumette':    {'element': 'plant', 'health': 90},
-	'Ivieron':     {'element': 'plant', 'health': 140},
+	'Ivieron':     {'element': 'plant', 'health': 150},
 	'Pluma':       {'element': 'plant', 'health': 160},
 	'Sparchu':     {'element': 'fire',  'health': 70},
 	'Cindrill':    {'element': 'fire',  'health': 100},
 	'Charmadillo': {'element': 'fire',  'health': 120},
 	'Finsta':      {'element': 'water', 'health': 50},
 	'Gulfin':      {'element': 'water', 'health': 80},
-	'Finiette':    {'element': 'water', 'health': 100},
-	'Atrox':       {'element': 'fire',  'health': 50},
+	'Finiette':    {'element': 'water', 'health': 140},
+	'Atrox':       {'element': 'fire',  'health': 30},
 	'Pouch':       {'element': 'plant', 'health': 80},
 	'Draem':       {'element': 'plant', 'health': 110},
 	'Larvea':      {'element': 'plant', 'health': 40},
 	'Cleaf':       {'element': 'plant', 'health': 90},
 	'Jacana':      {'element': 'fire',  'health': 60},
-	'Friolera':    {'element': 'water', 'health': 70},
+	'Friolera':    {'element': 'water', 'health': 130},
 }
 
 ABILITIES_DATA = {
@@ -35,7 +35,7 @@ ABILITIES_DATA = {
 	'spark':   {'damage': 35,  'element': 'fire',   'animation': 'fire'},
 	'nuke':    {'damage': 50,  'element': 'fire',   'animation': 'explosion'},
 	'splash':  {'damage': 30,  'element': 'water',  'animation': 'splash'},
-	'shards':  {'damage': 50,  'element': 'water',  'animation': 'ice'},
+	'shards':  {'damage': 45,  'element': 'water',  'animation': 'ice'},
     'spiral':  {'damage': 40,  'element': 'plant',  'animation': 'green'}
 }
 

@@ -1,13 +1,14 @@
 from settings import *
 
 class UI:
-    def __init__(self, monster, player_monsters, simple_surfs):
+    def __init__(self, monster, player_monsters, simple_surfs, get_input):
         self.display_surface = pygame.display.get_surface()
         self.font = pygame.font.Font(None, 60)
         self.left = WINDOW_WIDTH / 2 - 200
         self.top = WINDOW_HEIGHT / 2 + 100
         self.monster = monster
         self.simple_surfs = simple_surfs
+        self.get_input = get_input
         # control
         self.general_options = ['attack', 'heal', 'switch', 'escape']
         self.general_index = {'col': 0, 'row': 0}
@@ -19,22 +20,40 @@ class UI:
         self.available_monsters = [monster for monster in self.player_monsters if monster != self.monster and monster.health > 0]
         self.switch_index = 0
 
-    def get_input(self, index, keys):
-        index['row'] = (index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % self.rows
-        index['col'] = (index['col'] + int(keys[pygame.K_d]) - int(keys[pygame.K_a])) % self.cols
-        if keys[pygame.K_SPACE]:
-            self.state = self.general_options[index['col'] + index['row'] * 2]
-
     def input(self):
         keys = pygame.key.get_just_pressed()
         if self.state == 'general':
-            self.get_input(self.general_index, keys)
+            self.general_index['row'] = (self.general_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % self.rows
+            self.general_index['col'] = (self.general_index['col'] + int(keys[pygame.K_d]) - int(keys[pygame.K_a])) % self.cols
+            if keys[pygame.K_SPACE]:
+                self.state = self.general_options[self.general_index['col'] + self.general_index['row'] * 2]
 
         elif self.state == 'attack':
-            self.get_input(self.attack_index, keys)
+            self.attack_index['row'] = (self.attack_index['row'] + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % self.rows
+            self.attack_index['col'] = (self.attack_index['col'] + int(keys[pygame.K_d]) - int(keys[pygame.K_a])) % self.cols
+            if keys[pygame.K_SPACE]:
+                attack = self.monster.abilities[self.attack_index['col'] + self.attack_index['row'] * 2]
+                self.get_input(self.state, attack)
+                self.state = 'general'
 
         elif self.state == 'switch':
             self.switch_index = (self.switch_index + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.available_monsters)
+            if keys[pygame.K_SPACE]:
+                self.get_input(self.state, self.available_monsters[self.switch_index])
+                self.state = 'general'
+
+        elif self.state == 'heal':
+            self.get_input('heal')
+            self.state = 'general'
+        
+        elif self.state == 'escape':
+            self.get_input('escape')
+                
+        if keys[pygame.K_BACKSPACE]:
+            self.state = 'general'
+            self.general_index = {'col': 0, 'row': 0}
+            self.attack_index = {'col': 0, 'row': 0}
+            self.switch_index = 0
 
     def quad_select(self, index, options):
         rect = pygame.FRect(self.left + 80, self.top + 120, 800, 400)
@@ -61,12 +80,13 @@ class UI:
             y = rect.top + rect.height / (self.visible_monsters * 2) + rect.height / self.visible_monsters * i + v_offset
             color = COLORS['gray'] if i == self.switch_index else COLORS['black']
             name = self.available_monsters[i].name
-            monster_surf = self.simple_surfs[name]
+            simple_surf = self.simple_surfs[name]
+            simple_rect = simple_surf.get_frect(center = (x - 200, y))
             text_surf = self.font.render(name, True, color)
             text_rect = text_surf.get_frect(center = (x,y))
             if rect.collidepoint(text_rect.center):
                 self.display_surface.blit(text_surf, text_rect)
-                self.display_surface.blit(monster_surf, text_rect)
+                self.display_surface.blit(simple_surf, simple_rect)
 
     def update(self):
         self.input()
