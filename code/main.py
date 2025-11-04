@@ -3,7 +3,8 @@ from support import *
 from timer import Timer
 from monster import Monster, Opponent
 from random import randint, choice
-from ui import UI
+from ui import *
+from attack import AttackAnimationSprite
 
 class Game:
     def __init__(self):
@@ -28,6 +29,7 @@ class Game:
         self.opponent = Opponent(self.random_name, self.front_surfs[self.random_name], self.all_sprites)
         # ui
         self.ui = UI(self.monster, self.player_monsters, self.simple_surfs, self.get_input)
+        self.opponent_ui = OpponentUI(self.opponent)
         # timers
         self.timers = {'player end': Timer(1000, func = self.opponent_turn), 'opponent end': Timer(1000, func = self.player_turn)}
 
@@ -41,10 +43,10 @@ class Game:
 
     def apply_attack(self, target, attack):
         attack_element = ABILITIES_DATA[attack]['element']
-        damage_value = ABILITIES_DATA[attack]['damage']
-        damage_value *= ELEMENT_DATA[attack_element][target.element]
-        target.health -= damage_value
-        print(damage_value)
+        attack_damage = ABILITIES_DATA[attack]['damage']
+        attack_animation = ABILITIES_DATA[attack]['animation']
+        target.health -=  attack_damage * ELEMENT_DATA[attack_element][target.element]
+        AttackAnimationSprite(target, self.attack_frames[attack_animation], self.all_sprites)
 
     def opponent_turn(self):
         attack = choice(self.opponent.abilities)
@@ -62,6 +64,7 @@ class Game:
         self.bg_surfs = folder_importer('images', 'other')
         self.front_surfs = folder_importer('images', 'front')
         self.simple_surfs = folder_importer('images', 'simple')
+        self.attack_frames = tile_importer(4, 'images', 'attacks')
 
     def draw_monster_floor(self):
         for sprite in self.all_sprites:
@@ -85,6 +88,7 @@ class Game:
             self.draw_monster_floor()
             self.all_sprites.draw(self.display_surface)
             self.ui.draw()
+            self.opponent_ui.draw()
             pygame.display.update()
         
         pygame.quit()
