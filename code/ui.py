@@ -37,10 +37,11 @@ class UI:
                 self.state = 'general'
 
         elif self.state == 'switch':
-            self.switch_index = (self.switch_index + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.available_monsters)
-            if keys[pygame.K_SPACE]:
-                self.get_input(self.state, self.available_monsters[self.switch_index])
-                self.state = 'general'
+            if self.available_monsters:
+                self.switch_index = (self.switch_index + int(keys[pygame.K_s]) - int(keys[pygame.K_w])) % len(self.available_monsters)       
+                if keys[pygame.K_SPACE]:
+                    self.get_input(self.state, self.available_monsters[self.switch_index])
+                    self.state = 'general'
 
         elif self.state == 'heal':
             self.get_input('heal')
@@ -90,7 +91,7 @@ class UI:
 
     def stats(self):
         # bg
-        rect = pygame.FRect(self.left, self.top, 500, 160)
+        rect = pygame.FRect(self.left-500, self.top-100, 500, 160)
         pygame.draw.rect(self.display_surface, COLORS['white'],rect, 0, 8)
         pygame.draw.rect(self.display_surface, COLORS['gray'],rect, 8, 8)
         # data
@@ -109,6 +110,7 @@ class UI:
 
     def update(self):
         self.input()
+        self.available_monsters = [monster for monster in self.player_monsters if monster!= self.monster and monster.health > 0]
 
     def draw(self):
         match self.state:
@@ -126,7 +128,7 @@ class OpponentUI:
 
     def draw(self):
         # bg
-        rect = pygame.FRect((0,0), (500,160)).move_to(midleft = (1000, self.monster.rect.centery))
+        rect = pygame.FRect((0,0), (500,160)).move_to(midright = (self.monster.rect.centerx-500, min(self.monster.rect.centery, 300)))
         pygame.draw.rect(self.display_surface, COLORS['white'],rect, 0, 8)
         pygame.draw.rect(self.display_surface, COLORS['gray'],rect, 8, 8)
         # name

@@ -12,22 +12,22 @@ COLORS = {
 }
 
 MONSTER_DATA = {
-	'Plumette':    {'element': 'plant', 'health': 90},
-	'Ivieron':     {'element': 'plant', 'health': 150},
-	'Pluma':       {'element': 'plant', 'health': 160},
+	'Plumette':    {'element': 'plant', 'health': 120},
+	'Ivieron':     {'element': 'plant', 'health': 170},
+	'Pluma':       {'element': 'plant', 'health': 180},
 	'Sparchu':     {'element': 'fire',  'health': 70},
 	'Cindrill':    {'element': 'fire',  'health': 100},
-	'Charmadillo': {'element': 'fire',  'health': 120},
+	'Charmadillo': {'element': 'fire',  'health': 140},
 	'Finsta':      {'element': 'water', 'health': 50},
 	'Gulfin':      {'element': 'water', 'health': 80},
-	'Finiette':    {'element': 'water', 'health': 140},
+	'Finiette':    {'element': 'water', 'health': 160},
 	'Atrox':       {'element': 'fire',  'health': 30},
-	'Pouch':       {'element': 'plant', 'health': 80},
-	'Draem':       {'element': 'plant', 'health': 110},
+	'Pouch':       {'element': 'plant', 'health': 110},
+	'Draem':       {'element': 'plant', 'health': 130},
 	'Larvea':      {'element': 'plant', 'health': 40},
 	'Cleaf':       {'element': 'plant', 'health': 90},
 	'Jacana':      {'element': 'fire',  'health': 60},
-	'Friolera':    {'element': 'water', 'health': 130},
+	'Friolera':    {'element': 'water', 'health': 150},
 }
 
 ABILITIES_DATA = {
