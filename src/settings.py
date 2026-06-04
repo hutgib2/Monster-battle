@@ -2,7 +2,8 @@ import pygame
 from os.path import join 
 from os import walk
 
-WINDOW_WIDTH, WINDOW_HEIGHT = 2560,1440
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+WINDOW_WIDTH, WINDOW_HEIGHT = screen.get_size()
 
 COLORS = {
     'black': '#000000',
